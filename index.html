@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6D</title>
+    <link rel="stylesheet" href="main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Revealed content behind the shutter -->
+    <div class="page-bg">
+        <div id="particle-container"></div>
+        <h1 class="hb-text">Happy<br>Birthday</h1>
+    </div>
+
+    <!-- The black shutter — everything inside slides with it -->
+    <div class="shutter" id="shutter">
+
+        <!-- 6D logo: starts centered large, shrinks to corner -->
+        <div class="intro-6d" id="intro6d">
+            <span>6D</span>
+        </div>
+
+        <!-- Speech paragraphs -->
+        <div class="speech-container" id="speechContainer">
+            <p class="speech-line" data-index="0">Dear One of The D of 6D,</p>
+            <p class="speech-line" data-index="1">It seems it is yet again that day of the year</p>
+            <p class="speech-line" data-index="2">when you realise you have lost your teenage</p>
+            <p class="speech-line" data-index="3">and have welcomed the twenties.</p>
+        </div>
+
+        <!-- Instruction text -->
+        <div class="pull-prompt" id="pullPrompt">
+            <span>pull the rope</span>
+        </div>
+
+        <!-- Rope hanging from top of shutter -->
+        <div class="rope-assembly" id="ropeAssembly">
+            <div class="rope-anchor"></div>
+            <div class="rope-braid" id="ropeBraid"></div>
+            <div class="rope-handle" id="ropeHandle">
+                <div class="handle-outer"></div>
+                <div class="handle-inner"></div>
+                <div class="handle-knot"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

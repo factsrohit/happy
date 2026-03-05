@@ -1,0 +1,297 @@
+/* ─── Reset ──────────────────────────────────────────────── */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --gold:      #c9a96e;
+    --gold-dark: #7a5510;
+    --cream:     #f4efe6;
+    --ink:       #111010;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--cream);
+}
+
+/* ─── Revealed content (behind shutter) ─────────────────── */
+.page-bg {
+    position: fixed;
+    inset: 0;
+    background: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 0;
+}
+
+.hb-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(4.5rem, 13vw, 10rem);
+    font-weight: 900;
+    color: var(--ink);
+    text-align: center;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    user-select: none;
+}
+
+/* ─── The Black Shutter ──────────────────────────────────── */
+.shutter {
+    position: fixed;
+    inset: 0;
+    background: #0c0c0c;
+    z-index: 10;
+    overflow: hidden;
+    will-change: transform;
+}
+
+/* subtle grain overlay */
+.shutter::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.12;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ─── 6D Intro ───────────────────────────────────────────── */
+.intro-6d {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    z-index: 3;
+    /* ALL transitions declared here so they fire on class changes */
+    transition:
+        opacity   0.9s ease,
+        top       1.3s cubic-bezier(0.4, 0, 0.2, 1),
+        left      1.3s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 1.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.intro-6d.visible {
+    opacity: 1;
+}
+
+.intro-6d span {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(6rem, 22vw, 15rem);
+    font-weight: 900;
+    color: #fff;
+    display: block;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    transition: font-size 1.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Shrink + fly to corner */
+.intro-6d.corner {
+    top: 26px;
+    left: 26px;
+    transform: translate(0, 0);
+}
+
+.intro-6d.corner span {
+    font-size: 1.1rem;
+    letter-spacing: 0.1em;
+    opacity: 0.85;
+}
+
+/* ─── Speech ─────────────────────────────────────────────── */
+.speech-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(88%, 580px);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    z-index: 3;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.speech-line {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.05rem, 2.6vw, 1.45rem);
+    font-weight: 300;
+    color: rgba(235, 228, 215, 0.92);
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 1s ease, transform 1s ease;
+    line-height: 1.65;
+    letter-spacing: 0.03em;
+    position: fixed;
+}
+
+.speech-line.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ─── Pull Prompt ────────────────────────────────────────── */
+.pull-prompt {
+    position: absolute;
+    /* sits just above rope handle */
+    top: calc(50vh + 58px);
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    white-space: nowrap;
+    z-index: 4;
+}
+
+.pull-prompt.visible {
+    opacity: 1;
+}
+
+.pull-prompt span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.38);
+    letter-spacing: 0.45em;
+    text-transform: lowercase;
+    animation: breathe 2.8s ease-in-out infinite;
+}
+
+@keyframes breathe {
+    0%, 100% { opacity: 0.3; }
+    50%       { opacity: 0.75; }
+}
+
+/* ─── Rope ───────────────────────────────────────────────── */
+.rope-assembly {
+    position: absolute;
+    top: 0;
+    left: 90%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 5;
+    transition: opacity 0.9s ease;
+}
+
+.rope-assembly.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* Anchor pin at top */
+.rope-anchor {
+    width: 10px;
+    height: 10px;
+    background: var(--gold);
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(201, 169, 110, 0.6);
+    margin-bottom: 0;
+    flex-shrink: 0;
+}
+
+/* Braided rope line */
+.rope-braid {
+    width: 6px;
+    height: 50vh;
+    background:
+        repeating-linear-gradient(
+            180deg,
+            var(--gold)      0px,
+            #a07828          2px,
+            var(--gold)      5px,
+            var(--gold-dark) 8px,
+            var(--gold)      11px,
+            #b89050          14px,
+            var(--gold)      17px
+        );
+    border-radius: 3px;
+    transform-origin: top center;
+    animation: sway 3s ease-in-out infinite;
+    flex-shrink: 0;
+}
+
+/* Knot / handle */
+.rope-handle {
+    opacity: 0;
+    position: relative;
+    top : -150px;
+    width: 300px;
+    height: 300px;
+    cursor: grab;
+    animation: sway 3s ease-in-out infinite;
+    animation-delay: 0.06s;
+    flex-shrink: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.rope-handle:active {
+    cursor: grabbing;
+}
+
+.handle-outer {
+    position: absolute;
+    inset: 0;
+    border: 3.5px solid var(--gold);
+    border-radius: 50%;
+    box-shadow:
+        0 0 0  2px rgba(201,169,110,0.15),
+        0 0 18px rgba(201,169,110,0.25);
+}
+
+.handle-inner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
+    border: 2px solid rgba(201,169,110,0.5);
+    border-radius: 50%;
+}
+
+.handle-knot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+}
+
+@keyframes sway {
+    0%, 100% { transform: rotate(-3deg); }
+    50%       { transform: rotate(3deg); }
+}
+
+/* ─── Completion flash ───────────────────────────────────── */
+@keyframes revealFlash {
+    0%   { opacity: 0; }
+    20%  { opacity: 0.08; }
+    100% { opacity: 0; }
+}
+
+.page-bg.flash::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #fff;
+    animation: revealFlash 0.6s ease forwards;
+    pointer-events: none;
+}
