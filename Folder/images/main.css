@@ -27,7 +27,7 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 0;
+    z-index: 1;
 }
 
 .hb-text {
@@ -70,12 +70,64 @@ html, body {
     transform: translate(-50%, -50%);
     opacity: 0;
     z-index: 3;
-    /* ALL transitions declared here so they fire on class changes */
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+
     transition:
         opacity   0.9s ease,
         top       1.3s cubic-bezier(0.4, 0, 0.2, 1),
         left      1.3s cubic-bezier(0.4, 0, 0.2, 1),
-        transform 1.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transform 1.3s cubic-bezier(0.4, 0, 0.2, 1),
+        gap       1.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.intro-6d .icon {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background-image: url("./images/6d.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: width  1.3s cubic-bezier(0.4, 0, 0.2, 1),
+                height 1.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.intro-6d span {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(6rem, 22vw, 15rem);
+    font-weight: 900;
+    color: #fff;
+    display: block;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    transition: font-size   1.3s cubic-bezier(0.4, 0, 0.2, 1),
+                letter-spacing 1.3s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity     1.3s ease;
+}
+
+/* ── Corner state ── */
+.intro-6d.corner {
+    top: 26px;
+    left: 26px;
+    transform: translate(0, 0);
+    gap: 0.3rem;
+    flex-direction: row;
+    align-items: center;
+}
+
+.intro-6d.corner .icon {
+    width: 32px;
+    height: 32px;
+}
+
+.intro-6d.corner span {
+    font-size: 1.1rem;
+    letter-spacing: 0.1em;
+    opacity: 0.85;
 }
 
 .intro-6d.visible {
@@ -125,7 +177,7 @@ html, body {
 
 .speech-line {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(1.05rem, 2.6vw, 1.45rem);
+    font-size: clamp(2rem, 6vw, 4.2rem);
     font-weight: 300;
     color: rgba(235, 228, 215, 0.92);
     opacity: 0;
@@ -144,7 +196,6 @@ html, body {
 /* ─── Pull Prompt ────────────────────────────────────────── */
 .pull-prompt {
     position: absolute;
-    /* sits just above rope handle */
     top: calc(50vh + 58px);
     left: 50%;
     transform: translateX(-50%);
@@ -160,7 +211,7 @@ html, body {
 
 .pull-prompt span {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 0.72rem;
+    font-size: 3.0rem;
     font-weight: 400;
     color: rgba(255, 255, 255, 0.38);
     letter-spacing: 0.45em;
@@ -294,4 +345,32 @@ html, body {
     background: #fff;
     animation: revealFlash 0.6s ease forwards;
     pointer-events: none;
+}
+
+
+.particle {
+    position: fixed;
+    bottom: -100px;
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.5;
+    animation: floatUp linear infinite;
+    z-index: 0;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.18;
+    }
+    90% {
+        opacity: 0.18;
+    }
+    100% {
+        transform: translateY(-110vh) rotate(25deg);
+        opacity: 0;
+    }
 }
