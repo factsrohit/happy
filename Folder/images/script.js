@@ -157,6 +157,7 @@ const IMAGE_DIR = './images/';          // path to your folder
 const IMAGE_FILES = [
     'image1.png',
     'image2.png',
+    'image3.png',
     // add as many as you like...
 ];
 const PARTICLE_COUNT = 20;
